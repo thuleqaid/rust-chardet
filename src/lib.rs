@@ -342,11 +342,11 @@ pub fn detect(byte_str: &Vec<u8>) -> (String, f32, String) {
 }
 
 /// translate charset name for encoding
-pub fn charset2encoding(enc:&String) -> Option<&str> {
+pub fn charset2encoding(enc:&String) -> &str {
     match enc.as_str() {
-        "CP932" => Some("windows-31j"),
-        "CP949" => Some("windows-949"),
-        "MacCyrillic" => Some("x-mac-cyrillic"),
-        _ => Some(enc.as_str()),
+        "CP932" => "windows-31j",
+        "CP949" => "windows-949",
+        "MacCyrillic" => "x-mac-cyrillic",
+        _ => enc.as_str(),
     }
 }

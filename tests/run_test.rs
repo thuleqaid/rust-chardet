@@ -403,3 +403,21 @@ fn basic_test() {
         assert!(result.2 == item.3, format!("Language Expected:[{}] Result:[{}]", item.3, result.2));
     }
 }
+
+#[test]
+fn translate_test() {
+    let char2enc:&[(String, &str)] = &[
+        // different names in encoding
+        ("CP932".to_string(), "windows-31j"),
+        ("CP949".to_string(), "windows-949"),
+        ("MacCyrillic".to_string(), "x-mac-cyrillic"),
+        // not available in encoding
+        ("IBM855".to_string(), "IBM855"),
+        ("UTF-32BE".to_string(), "UTF-32BE"),
+        ("UTF-32LE".to_string(), "UTF-32LE"),
+    ];
+    for item in char2enc {
+        let enc = chardet::charset2encoding(&item.0);
+        assert!( enc == item.1, format!("Charset: [{}] Expected Encoding: [{}] Result: [{}]", item.0, item.1, enc));
+    }
+}
