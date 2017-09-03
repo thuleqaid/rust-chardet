@@ -1,6 +1,3 @@
-# rust-chardet
-rust version of chardet
-
 Rust-Chardet
 =========================
 
