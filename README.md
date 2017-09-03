@@ -1,5 +1,9 @@
 Rust-Chardet
 =========================
+[![Rust-Charset on Travis CI][travis-image]][travis]
+
+[travis-image]: https://travis-ci.org/thuleqaid/rust-chardet.png
+[travis]: https://travis-ci.org/thuleqaid/rust-chardet
 
 Rust version of chardet.
 
