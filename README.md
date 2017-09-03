@@ -22,21 +22,36 @@ Then put this in your crate root:
 extern crate chardet;
 ```
 
-To detect charset:
+Using with encoding:
 
 ```rust
+extern crate chardet;
+extern crate encoding;
 use chardet;
+use std::fs::OpenOptions;
+use std::io::prelude::*;
+use encoding::DecoderTrap;
+use encoding::label::encoding_from_whatwg_label;
 
-let result_file:(String, f32, String) = chardet::detect_file("FilePath");
-// result_file.0 Encode
-// result_file.1 Confidence
-// result_file.2 Language
+// open text file
+let mut fh = OpenOptions::new().read(true).open(filepath).expect(
+    "Could not open file",
+);
+let mut reader: Vec<u8> = Vec::new();
 
-let mut bindata:Vec<u8> = Vec::new();
-// load file/data into bindata
-let result_vec:(String, f32, String) = chardet::detect(&bindata);
-// result_vec.0 Encode
-// result_vec.1 Confidence
-// result_vec.2 Language
+// read file
+fh.read_to_end(&mut reader).expect("Could not read file");
+
+// detect charset of the file
+let result = detect(&reader);
+// result.0 Encode
+// result.1 Confidence
+// result.2 Language
+
+// decode file into utf-8
+let coder = encoding_from_whatwg_label(charset2encoding(&result.0));
+if coder.is_some() {
+    let utf8reader = coder.unwrap().decode(&reader, DecoderTrap::Ignore).expect("Error");
+}
 ```
 

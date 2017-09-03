@@ -1,4 +1,6 @@
 extern crate chardet;
+use std::fs::OpenOptions;
+use std::io::prelude::*;
 
 const TEST_TABLE:&[(&str, &str, f32, &str)] = &[
     ("tests/data/ascii/howto.diveintomark.org.xml","ascii", 0.99, ""),
@@ -388,7 +390,12 @@ const TEST_TABLE:&[(&str, &str, f32, &str)] = &[
 #[test]
 fn basic_test() {
     for item in TEST_TABLE {
-        let result = chardet::detect_file(item.0);
+        let mut fh = OpenOptions::new().read(true).open(item.0).expect(
+            "Could not open file",
+        );
+        let mut reader: Vec<u8> = Vec::new();
+        fh.read_to_end(&mut reader).expect("Could not read file");
+        let result = chardet::detect(&reader);
         println!("{:?}", item);
         println!("{:?}", result);
         assert!(result.0 == item.1, format!("Encoding Expected:[{}] Result:[{}]", item.1, result.0));

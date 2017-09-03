@@ -1,6 +1,3 @@
-use std::fs::OpenOptions;
-use std::io::prelude::*;
-
 mod enums;
 mod codingstatemachine;
 mod mbcssm;
@@ -337,17 +334,19 @@ impl UniversalDetector {
     }
 }
 
+/// detect charset for given buffer
 pub fn detect(byte_str: &Vec<u8>) -> (String, f32, String) {
     let mut detector = UniversalDetector::new();
     detector.feed(byte_str);
     detector.close()
 }
 
-pub fn detect_file(filepath: &str) -> (String, f32, String) {
-    let mut fh = OpenOptions::new().read(true).open(filepath).expect(
-        "Could not open file",
-    );
-    let mut reader: Vec<u8> = Vec::new();
-    fh.read_to_end(&mut reader).expect("Could not read file");
-    detect(&reader)
+/// translate charset name for encoding
+pub fn charset2encoding(enc:&String) -> Option<&str> {
+    match enc.as_str() {
+        "CP932" => Some("windows-31j"),
+        "CP949" => Some("windows-949"),
+        "MacCyrillic" => Some("x-mac-cyrillic"),
+        _ => Some(enc.as_str()),
+    }
 }
