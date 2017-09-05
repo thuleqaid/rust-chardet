@@ -74,7 +74,11 @@ impl UniversalDetector {
             }
             _ => {}
         }
-        self.m_charset_probers.clear();
+        if !self.m_charset_probers.is_empty() {
+            for x in &mut self.m_charset_probers {
+                x.reset();
+            }
+        }
     }
     pub fn feed(&mut self, byte_str: &Vec<u8>) {
         if self.m_done {

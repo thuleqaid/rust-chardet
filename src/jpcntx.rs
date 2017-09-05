@@ -7136,6 +7136,7 @@ impl SJISContextAnalysis {
 impl JapaneseContextAnalysis for SJISContextAnalysis {
     fn reset(&mut self) {
         self.base.reset();
+        self.base.m_charset = "SHIFT_JIS".to_string();
     }
     fn got_enough_data(&self) -> bool {
         self.base.got_enough_data()
@@ -7210,6 +7211,7 @@ impl EUCJPContextAnalysis {
 impl JapaneseContextAnalysis for EUCJPContextAnalysis {
     fn reset(&mut self) {
         self.base.reset();
+        self.base.m_charset = "EUC-JP".to_string();
     }
     fn got_enough_data(&self) -> bool {
         self.base.got_enough_data()

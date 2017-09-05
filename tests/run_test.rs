@@ -405,6 +405,26 @@ fn basic_test() {
 }
 
 #[test]
+fn reuse_test() {
+    let mut detector = chardet::UniversalDetector::new();
+    for item in TEST_TABLE {
+        let mut fh = OpenOptions::new().read(true).open(item.0).expect(
+            "Could not open file",
+        );
+        let mut reader: Vec<u8> = Vec::new();
+        fh.read_to_end(&mut reader).expect("Could not read file");
+        detector.feed(&reader);
+        let result = detector.close();
+        println!("{:?}", item);
+        println!("{:?}", result);
+        assert!(result.0 == item.1, format!("Encoding Expected:[{}] Result:[{}]", item.1, result.0));
+        assert!(result.1 >= item.2, format!("Confidence Expected:[{}] Result:[{}]", item.2, result.1));
+        assert!(result.2 == item.3, format!("Language Expected:[{}] Result:[{}]", item.3, result.2));
+        detector.reset();
+    }
+}
+
+#[test]
 fn translate_test() {
     let char2enc:&[(String, &str)] = &[
         // different names in encoding
