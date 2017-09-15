@@ -88,7 +88,7 @@ impl CharsetProber for Latin1Prober {
         self.m_last_char_class = OTH;
         self.m_freq_counter = [0;FREQ_CAT_NUM];
     }
-    fn feed(&mut self, byte_str: &Vec<u8>) -> &ProbingState {
+    fn feed(&mut self, byte_str: &[u8]) -> &ProbingState {
         let byte_str2 = filter_with_english_letters(byte_str);
         for c in byte_str2 {
             let char_class = Latin1_CharToClass[c as usize];

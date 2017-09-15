@@ -25,7 +25,7 @@ impl<'a> CharsetProber for UTF8Prober<'a> {
         self.m_coding_sm.reset();
         self.m_num_mb_chars = 0;
     }
-    fn feed(&mut self, byte_str: &Vec<u8>) -> &ProbingState {
+    fn feed(&mut self, byte_str: &[u8]) -> &ProbingState {
         for i in 0..byte_str.len() {
             match self.m_coding_sm.next_state(byte_str[i]) {
                 MachineState::START => {

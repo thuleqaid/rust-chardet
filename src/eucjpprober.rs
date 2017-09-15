@@ -31,7 +31,7 @@ impl<'a> CharsetProber for EUCJPProber<'a> {
         self.base.reset();
         self.m_context_analyzer.reset();
     }
-    fn feed(&mut self, byte_str: &Vec<u8>) -> &ProbingState {
+    fn feed(&mut self, byte_str: &[u8]) -> &ProbingState {
         {
             let sm = self.base.m_coding_sm.as_mut().unwrap();
             let da = self.base.m_distribution_analyzer.as_mut().unwrap();

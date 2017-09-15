@@ -74,7 +74,7 @@ impl<'a> CharsetProber for HebrewProber<'a> {
         self.m_visual_prober.reset();
         self.m_state = ProbingState::Detecting;
     }
-    fn feed(&mut self, byte_str: &Vec<u8>) -> &ProbingState {
+    fn feed(&mut self, byte_str: &[u8]) -> &ProbingState {
         if *self.get_state() == ProbingState::NotMe {
             return self.get_state();
         }

@@ -53,7 +53,7 @@ impl<'a> CharsetProber for SingleByteCharsetProber<'a> {
         self.m_total_char = 0;
         self.m_freq_char = 0;
     }
-    fn feed(&mut self, byte_str: &Vec<u8>) -> &ProbingState {
+    fn feed(&mut self, byte_str: &[u8]) -> &ProbingState {
         let byte_str2;
         let byte_str_len;
         if !self.m_model.keep_english_letter {

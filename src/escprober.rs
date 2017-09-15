@@ -48,7 +48,7 @@ impl<'a> CharsetProber for EscCharsetProber<'a> {
         self.m_detected_charset = "".to_string();
         self.m_detected_language = "".to_string();
     }
-    fn feed(&mut self, byte_str: &Vec<u8>) -> &ProbingState {
+    fn feed(&mut self, byte_str: &[u8]) -> &ProbingState {
         for c in byte_str {
             for i in 0..self.m_coding_sm.len() {
                 if !self.m_coding_sm_valid[i] {

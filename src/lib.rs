@@ -80,7 +80,7 @@ impl UniversalDetector {
             }
         }
     }
-    pub fn feed(&mut self, byte_str: &Vec<u8>) {
+    pub fn feed(&mut self, byte_str: &[u8]) {
         if self.m_done {
             return;
         }
@@ -339,7 +339,7 @@ impl UniversalDetector {
 }
 
 /// detect charset for given buffer
-pub fn detect(byte_str: &Vec<u8>) -> (String, f32, String) {
+pub fn detect(byte_str: &[u8]) -> (String, f32, String) {
     let mut detector = UniversalDetector::new();
     detector.feed(byte_str);
     detector.close()

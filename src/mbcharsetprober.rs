@@ -34,7 +34,7 @@ impl<'a> CharsetProber for MultiByteCharsetProber<'a> {
             x.reset();
         }
     }
-    fn feed(&mut self, byte_str: &Vec<u8>) -> &ProbingState {
+    fn feed(&mut self, byte_str: &[u8]) -> &ProbingState {
         let enoughdata:bool;
         {
             let sm = self.m_coding_sm.as_mut().unwrap();

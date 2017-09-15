@@ -27,7 +27,7 @@ impl<'a> CharsetProber for CP949Prober<'a> {
     fn reset(&mut self) {
         self.base.reset();
     }
-    fn feed(&mut self, byte_str: &Vec<u8>) -> &ProbingState {
+    fn feed(&mut self, byte_str: &[u8]) -> &ProbingState {
         self.base.feed(byte_str)
     }
     fn get_charset(&self) -> String {

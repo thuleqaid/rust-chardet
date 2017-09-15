@@ -1,6 +1,7 @@
 extern crate chardet;
 use std::fs::OpenOptions;
 use std::io::prelude::*;
+use std::io::BufReader;
 
 const TEST_TABLE:&[(&str, &str, f32, &str)] = &[
     ("tests/data/ascii/howto.diveintomark.org.xml","ascii", 0.99, ""),
@@ -422,6 +423,16 @@ fn reuse_test() {
         assert!(result.2 == item.3, format!("Language Expected:[{}] Result:[{}]", item.3, result.2));
         detector.reset();
     }
+}
+
+#[test]
+fn bufreader_test() {
+    let file = OpenOptions::new().read(true).open("tests/data/CP932/www2.chuo-u.ac.jp-suishin.xml").expect("Could not open file",);
+    let mut fin = BufReader::new(file);
+    let result = chardet::detect(fin.fill_buf().unwrap());
+    assert!(result.0 == "CP932", format!("Encoding Expected:[CP932] Result:[{}]", result.0));
+    assert!(result.1 >= 0.99, format!("Confidence Expected:[0.99] Result:[{}]", result.1));
+    assert!(result.2 == "Japanese", format!("Language Expected:[Japanese] Result:[{}]", result.2));
 }
 
 #[test]

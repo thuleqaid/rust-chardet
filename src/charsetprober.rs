@@ -2,14 +2,14 @@ use super::enums::ProbingState;
 
 pub trait CharsetProber {
     fn reset(&mut self);
-    fn feed(&mut self, byte_str: &Vec<u8>) -> &ProbingState;
+    fn feed(&mut self, byte_str: &[u8]) -> &ProbingState;
     fn get_charset(&self) -> String;
     fn get_confidence(&self) -> f32;
     fn get_language(&self) -> String;
     fn get_state(&self) -> &ProbingState;
 }
 
-pub fn filter_high_byte_only(byte_str: &Vec<u8>) -> Vec<u8> {
+pub fn filter_high_byte_only(byte_str: &[u8]) -> Vec<u8> {
     let mut filtered: Vec<u8> = Vec::new();
     for curr in 0..byte_str.len() {
         let buf_char = byte_str[curr];
@@ -22,7 +22,7 @@ pub fn filter_high_byte_only(byte_str: &Vec<u8>) -> Vec<u8> {
     filtered
 }
 
-pub fn filter_international_words(byte_str: &Vec<u8>) -> Vec<u8> {
+pub fn filter_international_words(byte_str: &[u8]) -> Vec<u8> {
     let mut filtered: Vec<u8> = Vec::new();
     let mut meet_msb: bool = false;
     let mut prev: usize = 0;
@@ -51,7 +51,7 @@ pub fn filter_international_words(byte_str: &Vec<u8>) -> Vec<u8> {
     filtered
 }
 
-pub fn filter_with_english_letters(byte_str: &Vec<u8>) -> Vec<u8> {
+pub fn filter_with_english_letters(byte_str: &[u8]) -> Vec<u8> {
     let mut filtered: Vec<u8> = Vec::new();
     let mut intag: bool = false;
     let mut prev: usize = 0;
