@@ -27,7 +27,8 @@ Using with encoding:
 ```rust
 extern crate chardet;
 extern crate encoding;
-use chardet;
+
+use chardet::{detect, charset2encoding};
 use std::fs::OpenOptions;
 use std::io::prelude::*;
 use encoding::DecoderTrap;
